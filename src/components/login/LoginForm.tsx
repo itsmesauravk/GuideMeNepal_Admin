@@ -6,10 +6,12 @@ import axios from "axios"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
+import { signIn } from "next-auth/react"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("saurav@example.com")
   const [password, setPassword] = useState("secret123")
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
@@ -23,24 +25,26 @@ const LoginForm = () => {
     formData.append("password", password)
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,
-        formData,
-        {
-          headers: { "Content-type": "application/json" },
-          withCredentials: true,
-        }
-      )
+      setLoading(true)
+      const result = await signIn("credentials", {
+        identifier: email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
+      })
 
-      if (response.data.success) {
-        toast.success(response.data.message)
-        router.push("/")
-      } else {
-        toast.error(response.data.message)
+      console.log(result)
+
+      if (result?.error) {
+        toast.error(result.error)
+      } else if (result?.url) {
+        router.push(result.url)
       }
     } catch (error: any) {
       console.error("Login failed:", error)
       toast.error(error?.response?.data?.message || "Something went wrong")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -111,10 +115,10 @@ const LoginForm = () => {
 
             <Button
               type="submit"
+              disabled={loading}
               className="w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-xl text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
-              Sign in
-              <ArrowRight className="ml-2 h-5 w-5" />
+              {loading ? "Please wait..." : "Login"}
             </Button>
           </form>
           <div className="flex justify-center mt-6 underline">
