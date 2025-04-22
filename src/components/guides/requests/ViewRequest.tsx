@@ -84,7 +84,7 @@ const ViewRequest = ({ id }: { id: string }) => {
       const data = response.data
       if (data.success) {
         toast.success(data.message || "Guide request accepted successfully!")
-        router.push("guide-requests") // Redirect to guide requests page
+        router.push("/guides") // Redirect to guide  page
       } else {
         console.error(data.message || "Error performing action")
         toast.error(data.message || "Error performing action")

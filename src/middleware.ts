@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   })
 
-  const protectedRoutes = ["/"]
+  const protectedRoutes = ["/", "/users", "/guides", "/guide-requests"]
 
   const isProtectedRoute = protectedRoutes.some((route) =>
     request.nextUrl.pathname.startsWith(route)
@@ -24,5 +24,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/users/:path*", "/guides/:path*", "/guide-requests/:path*"],
 }
