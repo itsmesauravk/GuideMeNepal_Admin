@@ -120,6 +120,10 @@ import {
   UserPlus,
   ContactRound,
   Users2,
+  MapPin,
+  ChartBarBig,
+  MessageCircleCodeIcon,
+  AlertCircle,
 } from "lucide-react"
 
 import {
@@ -162,6 +166,14 @@ export function AppSidebar() {
     { title: "Guide Requests", url: "/guide-requests", icon: UserPlus },
     { title: "Guides", url: "/guides", icon: ContactRound },
     { title: "Users", url: "/users", icon: Users2 },
+    { title: "Location", url: "/location", icon: MapPin },
+    { title: "Analytics", url: "/analytics", icon: ChartBarBig },
+    { title: "Contact", url: "/contact", icon: MessageCircleCodeIcon },
+    {
+      title: "Guide Reports",
+      url: "/guide-reports",
+      icon: AlertCircle,
+    },
   ]
 
   const handleLogout = () => {

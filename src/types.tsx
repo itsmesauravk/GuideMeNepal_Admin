@@ -52,6 +52,7 @@ export interface UserType {
   password: string
   contact?: string | null
   authMethod: "email" | "google" | "facebook"
+  verified: boolean
   otpCode?: number | null
   otpExpiresAt?: Date | null
   refreshToken?: string | null
@@ -59,4 +60,16 @@ export interface UserType {
   isSuspended: boolean
   createdAt?: Date
   updatedAt?: Date
+}
+
+export interface SessionData {
+  jwt?: string
+  user: {
+    id: string
+    email: string
+    name: string
+    role: string
+    image: string
+    firstTimeLogin?: boolean
+  }
 }

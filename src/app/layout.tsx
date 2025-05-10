@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/utils/Sidebar"
 import { usePathname } from "next/navigation"
 import { Provider } from "@/providers/Providers"
+import { ClientSocketProvider } from "@/providers/ClientSocketProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,19 +44,21 @@ export default function RootLayout({
       >
         <Provider>
           <Providers />
-          <SidebarProvider>
-            {!isLoginPage &&
-              !isForgotPasswordPage &&
-              !isVerifyPage &&
-              !isChangePasswordPage && (
-                <>
-                  <AppSidebar />
-                  <SidebarTrigger />
-                </>
-              )}
+          <ClientSocketProvider>
+            <SidebarProvider>
+              {!isLoginPage &&
+                !isForgotPasswordPage &&
+                !isVerifyPage &&
+                !isChangePasswordPage && (
+                  <>
+                    <AppSidebar />
+                    <SidebarTrigger />
+                  </>
+                )}
 
-            {children}
-          </SidebarProvider>
+              {children}
+            </SidebarProvider>
+          </ClientSocketProvider>
         </Provider>
       </body>
     </html>
