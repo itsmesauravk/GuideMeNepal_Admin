@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
 import { signIn } from "next-auth/react"
+import Image from "next/image"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("saurav@example.com")
@@ -54,11 +55,12 @@ const LoginForm = () => {
         {/* Left side with image */}
         <div className="hidden md:flex md:w-2/5 p-12 flex-col justify-center items-center">
           <div className="w-full aspect-square relative  ">
-            <img
-              src="https://img.freepik.com/free-vector/detailed-travel-logo_23-2148627268.jpg"
-              //   src="/logos/gmn.png"
-              alt="Login"
+            <Image
+              src="/logos/gmn_logo.png"
+              alt="Logo"
               className="w-full h-full object-contain"
+              height={500}
+              width={500}
             />
           </div>
         </div>
@@ -116,7 +118,7 @@ const LoginForm = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center px-6 py-3.5 border border-transparent rounded-xl text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="w-full flex items-center justify-center px-6 py-2 text-white bg-primary-dark hover:bg-primary-darker"
             >
               {loading ? "Please wait..." : "Login"}
             </Button>
