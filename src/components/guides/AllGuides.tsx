@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
 import {
+  Ban,
+  CheckCircle,
   ChevronRight,
   Clock,
   Languages,
   Mail,
   MapPin,
+  PauseIcon,
   Phone,
   RefreshCwIcon,
   User,
@@ -24,6 +27,7 @@ import { GuideType } from "@/types"
 import Image from "next/image"
 import { Loading } from "../common/Loading"
 import { formatDistanceToNow } from "date-fns"
+import { toast } from "sonner"
 
 const AllGuides = () => {
   const [guides, setGuides] = useState<GuideType[]>([])
@@ -78,6 +82,26 @@ const AllGuides = () => {
     return () => clearTimeout(timeout)
   }, [search])
 
+  const handleSuspendAndUnblock = async (guideId: number, action: string) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/guide-suspension`,
+        {
+          guideId,
+          action,
+        }
+      )
+      const data = response.data
+      if (data.success) {
+        toast.success(data.message || "Action performed successfully")
+        fetchGuides()
+      }
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "Action failed")
+      console.error("Suspending guide failed:", error)
+    }
+  }
+
   return (
     <div className="p-8 min-h-screen">
       {/* Header */}
@@ -93,7 +117,7 @@ const AllGuides = () => {
         {/* //refresh button  */}
         <Button
           onClick={() => fetchGuides()}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 bg-primary-dark hover:bg-primary-darker"
         >
           <RefreshCwIcon
             className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
@@ -211,9 +235,35 @@ const AllGuides = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="flex items-center justify-center px-6 py-4 whitespace-nowrap text-sm font-medium  ">
+                    {guide.securityMetadata.isSuspended ? (
+                      <Button
+                        onClick={() =>
+                          handleSuspendAndUnblock(guide.id, "active")
+                        }
+                        className="bg-green-600 hover:bg-green-700 text-white mr-2"
+                      >
+                        <>
+                          <CheckCircle className="w-4 h-4 mr-1" />
+                          <p className="text-white">Unblock</p>
+                        </>
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          handleSuspendAndUnblock(guide.id, "suspended")
+                        }
+                        className="bg-red-600 hover:bg-red-700 text-white mr-2"
+                      >
+                        <>
+                          <Ban className="w-4 h-4 mr-1" />
+                          <p className="text-white">Suspend</p>
+                        </>
+                      </Button>
+                    )}
                     <Button
-                      onClick={() => router.push(`/guides/details/${guide.id}`)}
+                      onClick={() => router.push(`/guides/${guide.id}`)}
+                      className="bg-primary-dark hover:bg-primary-darker"
                     >
                       Details
                     </Button>

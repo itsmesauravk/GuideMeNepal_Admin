@@ -148,6 +148,9 @@ const UsersHome = () => {
                   Auth Type
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Last Active
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -192,6 +195,21 @@ const UsersHome = () => {
                       {guide.authMethod}
                     </span>
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2 py-1 text-xs font-semibold rounded-full `}
+                    >
+                      {guide.verified ? (
+                        <span className="bg-green-100 text-green-800">
+                          VERIFIED
+                        </span>
+                      ) : (
+                        <span className="bg-red-100 text-red-800">
+                          NOT VERIFIED
+                        </span>
+                      )}
+                    </span>
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4 text-gray-500" />
@@ -210,8 +228,9 @@ const UsersHome = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
                     <Button
+                      className="bg-primary-dark hover:bg-primary-darker"
                       onClick={() => router.push(`/users/details/${guide.id}`)}
                     >
                       Details
