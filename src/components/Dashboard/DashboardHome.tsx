@@ -324,21 +324,19 @@ const DashboardHome = () => {
               </Link>
 
               <Link
-                href="#"
+                href="/contact"
                 className="flex items-center p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
               >
                 <UserCheck className="w-5 h-5 text-green-600 mr-3" />
                 <div>
-                  <p className="font-medium text-gray-800">
-                    Review Guide Applications
-                  </p>
+                  <p className="font-medium text-gray-800">Contact Messages</p>
                   <p className="text-xs text-gray-500">
-                    {dashboardData?.metrices.totalGuides || 0} pending requests
+                    View and respond to user messages
                   </p>
                 </div>
               </Link>
 
-              <Link
+              {/* <Link
                 href="#"
                 className="flex items-center p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors"
               >
@@ -349,7 +347,7 @@ const DashboardHome = () => {
                     View and handle booking issues
                   </p>
                 </div>
-              </Link>
+              </Link> */}
             </div>
           </Card>
         </div>
